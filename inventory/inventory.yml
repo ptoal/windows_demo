@@ -1,0 +1,11 @@
+---
+all:
+  hosts:
+    vcenter.mgmt.toal.ca:
+    windows_template:
+    windows_test:
+
+templates:
+  hosts:
+    windows_template:
+    windows_test:

@@ -1,0 +1,15 @@
+---
+
+#vmware_tools_download_url: https://packages.vmware.com/tools/releases/11.0.1/windows/x64/VMware-tools-11.0.1-14773994-x86_64.exe
+#vmware_tools_product_id: '{742FCBAF-EE5D-48B2-9E95-DA0513B79570}'
+vmware_tools_download_base_url: https://packages.vmware.com/tools/releases/latest/windows/x64/
+vmware_tools_download_url: https://packages.vmware.com/tools/releases/11.3.5/windows/x64/VMware-tools-11.3.5-18557794-x86_64.exe
+vmware_tools_product_id: '{1FF5D624-5515-4343-837A-E54C101573E6}'
+
+vmware_tools_find_latest: true
+
+temp_directory: "{{ ansible_env.TEMP }}"
+win_61_security_hot_fix:
+  kb: kb4474419
+  file: windows6.1-kb4474419-v3-x64_b5614c6cea5cb4e198717789633dca16308ef79c.msu
+  url: http://download.windowsupdate.com/c/msdownload/update/software/secu/2019/09/windows6.1-kb4474419-v3-x64_b5614c6cea5cb4e198717789633dca16308ef79c.msu

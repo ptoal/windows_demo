@@ -1,0 +1,70 @@
+---
+- name: Temporarily hard-code data
+  hosts: all,localhost
+  gather_facts: false
+
+  tasks:
+  - name: Set some facts
+    ansible.builtin.set_fact:
+      vmware_guest_name: "windows_template_for_update"
+      vmware_datacenter_name: "SagelyDC"
+      vmware_cluster_name: "HighPower"
+      
+- name: Prepare Template for Update
+  hosts: localhost
+  gather_facts: false
+  module_defaults:
+    group/vmware:
+      datacenter: "{{ vmware_datacenter_name }}"
+
+  tasks:
+    - name: Template converted to VM
+      community.vmware.vmware_guest:
+        cluster: "{{ vmware_cluster_name }}"
+        name: "{{ vmware_guest_name }}"
+        is_template: no
+        state: present
+
+    - name: VM powered on
+      community.vmware.vmware_guest_powerstate:
+        name: "{{ vmware_guest_name }}" 
+        state: powered-on
+      register: deploy
+    
+- name: Perform Windows Updates
+  hosts: windows_template_for_update
+  gather_facts: false
+  module_defaults:
+    group/vmware:
+      datacenter: "{{ vmware_datacenter_name }}"
+
+  tasks:
+    - name: Gather information about VM
+      community.vmware.vmware_guest_info:
+        name: "{{ vmware_guest_name }}"
+      register: windows_guest_info
+      delegate_to: localhost
+
+    - debug: var=windows_guest_info  
+
+- name: VM is powered down and converted to template
+  hosts: localhost
+  gather_facts: false
+  module_defaults:
+    group/vmware:
+      datacenter: "{{ vmware_datacenter_name }}"
+
+  tasks:
+    - name: Wait for the virtual machine to shutdown
+      community.vmware.vmware_guest_powerstate:
+        name: "{{ vmware_guest_name }}"
+        state: shutdown-guest
+        state_change_timeout: 200
+      register: deploy
+
+    - name: convert to template
+      community.vmware.vmware_guest:
+        name: "{{ vmware_guest_name }}"
+        is_template: yes
+        state: present
+

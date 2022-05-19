@@ -1,0 +1,15 @@
+---
+plugin: community.vmware.vmware_vm_inventory
+strict: False
+validate_certs: False
+with_tags: True
+hostnames:
+- config.name
+keyed_groups:
+- key: tag_category.organization
+  prefix: "vmware_tag_organization_"
+  separator: ""
+- key: config.guestId
+  prefix: "vmware_guestid_"
+  separator: ""
+with_nested_properties: True

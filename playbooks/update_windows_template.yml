@@ -39,13 +39,20 @@
       datacenter: "{{ vmware_datacenter_name }}"
 
   tasks:
+    - name: Refresh Inventory
+      meta: refresh_inventory
+
     - name: Gather information about VM
       community.vmware.vmware_guest_info:
         name: "{{ vmware_guest_name }}"
       register: windows_guest_info
       delegate_to: localhost
-
-    - debug: var=windows_guest_info  
+    
+    - name: Host is up
+      ansible.builtin.wait_for:
+        host: "{{ ansible_host }}"
+        port: "{{ ansible_port }}"
+        timeout: 300
 
 - name: VM is powered down and converted to template
   hosts: localhost

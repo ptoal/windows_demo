@@ -52,7 +52,24 @@
       ansible.builtin.wait_for:
         host: "{{ ansible_host }}"
         port: "{{ ansible_port }}"
-        timeout: 300
+        timeout: 600
+      delegate_to: localhost
+
+- name: update windows systems
+  hosts: windows_template_for_update
+  gather_facts: True
+  become: no
+  vars:
+    win_update_category_names:
+      - CriticalUpdates
+      - DefinitionUpdates
+      - SecurityUpdates
+      - UpdateRollups
+      - Updates
+            
+  roles:
+    - oatakan.windows_update
+
 
 - name: VM is powered down and converted to template
   hosts: localhost

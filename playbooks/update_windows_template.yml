@@ -7,7 +7,7 @@
   - name: Set some facts
     ansible.builtin.set_fact:
       vmware_guest_name: "windows_template_for_update"
-      vmware_datacenter_name: "SagelyDC"
+      vmware_datacenter_name: "{{ vmware_datacenter_name }}"
       vmware_cluster_name: "HighPower"
       
 - name: Prepare Template for Update
@@ -48,12 +48,12 @@
       register: windows_guest_info
       delegate_to: localhost
     
-    - name: Host is up
-      ansible.builtin.wait_for:
-        host: "{{ ansible_host }}"
-        port: "{{ ansible_port }}"
-        timeout: 600
-      delegate_to: localhost
+    # - name: Host is up
+    #   ansible.builtin.wait_for:
+    #     host: "{{ ansible_host }}"
+    #     port: "{{ ansible_port }}"
+    #     timeout: 600
+    #   delegate_to: localhost
 
 - name: update windows systems
   hosts: windows_template_for_update

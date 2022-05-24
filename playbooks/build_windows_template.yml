@@ -1,5 +1,5 @@
 - name: create a vmware windows template
-  hosts: windows_template
+  hosts: templates
   gather_facts: False
   become: no
   # Workaround for https://github.com/ansible/ansible-runner/issues/1024
@@ -8,7 +8,10 @@
 
   tasks:
     - name: "Create VMware Windows Template"
-      include_role:
+      ansible.builtin.include_role:
         name: oatakan.windows_vcenter_template
         apply:
           delegate_to: localhost
+    
+    - ansible.builtin.debug:
+        msg: "Hello World!"

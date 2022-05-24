@@ -39,9 +39,6 @@
       datacenter: "{{ vmware_datacenter_name }}"
 
   tasks:
-    - name: Refresh Inventory
-      meta: refresh_inventory
-
     - name: Gather information about VM
       community.vmware.vmware_guest_info:
         name: "{{ vmware_guest_name }}"
@@ -50,8 +47,8 @@
     
     - name: Host is up
       ansible.builtin.wait_for:
-        host: "{{ hostvars[inventory_hostname].ansible_host }}"
-        port: "{{ hostvars[inventory_hostname].ansible_port }}"
+        host: "{{ instance.ipv4 }}"
+        port: "{{ ansible_port }}"
         timeout: 600
       delegate_to: localhost
 

@@ -12,4 +12,7 @@ keyed_groups:
 - key: config.guestId
   prefix: "vmware_guestid_"
   separator: ""
+resources:
+  - folder:
+    - Demo
 with_nested_properties: True

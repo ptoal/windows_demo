@@ -17,7 +17,7 @@ template_vm_dns_servers:
   - 8.8.8.8
 iso_file_name: '17763.737.190906-2324.rs5_release_svc_refresh_SERVER_EVAL_x64FRE_en-us_1.iso' # name of the iso file, make sure it's uploaded a datastore
 datastore_iso_folder: 'iso' # folder name on datastore where iso file resides
-iso_image_index: '1' # put index number here from the order inside the iso, for example 1 - standard, 2 - core etc
+iso_image_index: '2' # put index number here from the order inside the iso, for example 1 - standard, 2 - core etc
 iso_product_key: ''
 vm_upgrade_powershell: false # only needed for 2008 R2
 install_updates: false # it will take longer to build with the updates, set to true if you want the updates

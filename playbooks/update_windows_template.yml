@@ -1,17 +1,17 @@
 ---
 - name: Temporarily hard-code data
-  hosts: all,localhost
+  hosts: templates
   gather_facts: false
 
   tasks:
   - name: Set some facts
     ansible.builtin.set_fact:
-      vmware_guest_name: "windows_template"
+      vmware_guest_name: "{{ inventory_hostname }}"
       vmware_datacenter_name: "SagelyDC"
       vmware_cluster_name: "HighPower"
       
 - name: Prepare Template for Update
-  hosts: localhost
+  hosts: templates
   gather_facts: false
   module_defaults:
     group/vmware:
@@ -24,15 +24,17 @@
         name: "{{ vmware_guest_name }}"
         is_template: no
         state: present
+      delegate_to: localhost
 
     - name: VM powered on
       community.vmware.vmware_guest_powerstate:
         name: "{{ vmware_guest_name }}" 
         state: powered-on
       register: deploy
+      delegate_to: localhost
     
 - name: Perform Windows Updates
-  hosts: windows_template
+  hosts: templates
   gather_facts: false
   module_defaults:
     group/vmware:
@@ -53,7 +55,7 @@
       delegate_to: localhost
 
 - name: update windows systems
-  hosts: windows_template
+  hosts: templates
   gather_facts: True
   become: no
   vars:
@@ -69,7 +71,7 @@
 
 
 - name: VM is powered down and converted to template
-  hosts: localhost
+  hosts: templates
   gather_facts: false
   module_defaults:
     group/vmware:
@@ -82,10 +84,12 @@
         state: shutdown-guest
         state_change_timeout: 200
       register: deploy
+      delegate_to: localhost
 
     - name: convert to template
       community.vmware.vmware_guest:
         name: "{{ vmware_guest_name }}"
         is_template: yes
         state: present
+      delegate_to: localhost
 

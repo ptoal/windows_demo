@@ -3,11 +3,7 @@ all:
   hosts:
     vcenter.mgmt.toal.ca:
     windows_template:
-    windows_template_for_update:
-    windows_test:
 
 templates:
   hosts:
     windows_template:
-    windows_test:
-    windows_template_for_update:

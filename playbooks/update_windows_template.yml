@@ -49,7 +49,7 @@
       ansible.windows.win_wait_for:
         host: "{{ windows_guest_info.instance.ipv4 }}"
         port: "{{ ansible_port }}"
-        timeout: 600
+        timeout: 300
       delegate_to: localhost
 
 - name: update windows systems

@@ -26,3 +26,4 @@ vcenter_cluster: HighPower
 vcenter_resource_pool: Demo
 vcenter_folder: Demo
 vcenter_datastore: SSD2TB
+ansible_host: "{{ template_vm_ip_address }}"

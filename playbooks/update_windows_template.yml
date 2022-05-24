@@ -50,8 +50,8 @@
     
     - name: Host is up
       ansible.builtin.wait_for:
-        host: "{{ ansible_host }}"
-        port: "{{ ansible_port }}"
+        host: "{{ hostvars[inventory_hostname].ansible_host }}"
+        port: "{{ hostvars[inventory_hostname].ansible_port }}"
         timeout: 600
       delegate_to: localhost
 

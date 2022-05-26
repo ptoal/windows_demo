@@ -7,3 +7,7 @@ all:
 templates:
   hosts:
     windows_template:
+
+windows:
+  hosts:
+    windows_template:

@@ -9,7 +9,7 @@
       vmware_guest_name: "{{ inventory_hostname }}"
       vmware_datacenter_name: "SagelyDC"
       vmware_cluster_name: "HighPower"
-      
+
 - name: Prepare Template for Update
   hosts: templates
   gather_facts: false
@@ -22,13 +22,13 @@
       community.vmware.vmware_guest:
         cluster: "{{ vmware_cluster_name }}"
         name: "{{ vmware_guest_name }}"
-        is_template: no
+        is_template: false
         state: present
       delegate_to: localhost
 
     - name: VM powered on
       community.vmware.vmware_guest:
-        name: "{{ vmware_guest_name }}" 
+        name: "{{ vmware_guest_name }}"
         state: powered-on
         networks:
           - name: mgmt
@@ -37,12 +37,12 @@
             gateway: "{{ template_vm_gateway }}"
             domain: "{{ template_vm_domain }}"
             dns_servers:
-            - "{{ template_vm_dns_servers }}"
+              - "{{ template_vm_dns_servers }}"
         customization:
-          autologon: True
+          autologon: true
           orgname: Ansible
           fullname: ansible
-          existing_vm: True
+          existing_vm: true
           password: "{{ ansible_password }}"
           dns_servers: "{{ item.dns_servers|default([]) }}"
           runonce:
@@ -53,16 +53,16 @@
       delegate_to: localhost
 
     - name: Waiting for servers to come online
-      wait_for:
+      ansible.builtin.wait_for:
         host: "{{ template_vm_ip_address }}"
         port: 5986
-        timeout: 600 
+        timeout: 600
 
 
 - name: update windows systems
   hosts: templates
-  gather_facts: True
-  become: no
+  gather_facts: true
+  become: false
   vars:
     win_update_category_names:
       - CriticalUpdates
@@ -70,7 +70,7 @@
       - SecurityUpdates
       - UpdateRollups
       - Updates
-            
+
   roles:
     - oatakan.windows_update
 
@@ -94,7 +94,6 @@
     - name: convert to template
       community.vmware.vmware_guest:
         name: "{{ vmware_guest_name }}"
-        is_template: yes
+        is_template: true
         state: present
       delegate_to: localhost
-

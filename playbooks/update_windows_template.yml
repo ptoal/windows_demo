@@ -51,27 +51,13 @@
             - netsh advfirewall set allprofiles state off
       register: deploy
       delegate_to: localhost
-    
-- name: Perform Windows Updates
-  hosts: templates
-  gather_facts: false
-  module_defaults:
-    group/vmware:
-      datacenter: "{{ vmware_datacenter_name }}"
 
-  tasks:
-    - name: Gather information about VM
-      community.vmware.vmware_guest_info:
-        name: "{{ vmware_guest_name }}"
-      register: windows_guest_info
-      delegate_to: localhost
-    
-    - name: Host is up
-      ansible.builtin.wait_for:
+    - name: Waiting for servers to come online
+      wait_for:
         host: "{{ template_vm_ip_address }}"
-        port: "{{ ansible_port }}"
-        timeout: 300
-      delegate_to: localhost
+        port: 5986
+        timeout: 600 
+
 
 - name: update windows systems
   hosts: templates

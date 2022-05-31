@@ -1,7 +1,7 @@
 - name: create a vmware windows template
   hosts: templates
-  gather_facts: False
-  become: no
+  gather_facts: false
+  become: false
   # Workaround for https://github.com/ansible/ansible-runner/issues/1024
   vars:
     ansible_async_dir: '/tmp/.ansible_async'

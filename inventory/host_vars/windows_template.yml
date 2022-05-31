@@ -1,6 +1,6 @@
 ---
-template_force: yes
-export_ovf: no
+template_force: true
+export_ovf: false
 distro_name: win2019 # this needs to be one of the standard values see 'os_short_names' var
 template_vm_name: "{{ inventory_hostname }}"
 template_vm_root_disk_size: 30
@@ -23,7 +23,6 @@ vm_upgrade_powershell: false # only needed for 2008 R2
 install_updates: false # it will take longer to build with the updates, set to true if you want the updates
 vcenter_datacenter: SagelyDC
 vcenter_cluster: HighPower
-vcenter_resource_pool: Demo
 vcenter_folder: Demo
 vcenter_datastore: SSD2TB
 ansible_host: "{{ template_vm_ip_address }}"

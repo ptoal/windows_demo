@@ -27,3 +27,4 @@ vcenter_folder: Demo
 vcenter_resource_pool: ""
 vcenter_datastore: SSD2TB
 ansible_host: "{{ template_vm_ip_address }}"
+instance_wait_connection_timeout: 1200

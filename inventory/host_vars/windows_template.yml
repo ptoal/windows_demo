@@ -24,5 +24,6 @@ install_updates: false # it will take longer to build with the updates, set to t
 vcenter_datacenter: SagelyDC
 vcenter_cluster: HighPower
 vcenter_folder: Demo
+vcenter_resource_pool: ""
 vcenter_datastore: SSD2TB
 ansible_host: "{{ template_vm_ip_address }}"

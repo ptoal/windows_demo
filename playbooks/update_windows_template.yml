@@ -88,7 +88,7 @@
 
   tasks:
     - name: create scheduled task to delete WinRM listeners and shutdown
-      win_scheduled_task:
+      community.windows.win_scheduled_task:
         name: sysprep-shutdown
         username: SYSTEM
         disallow_start_if_on_batteries: false
@@ -100,7 +100,7 @@
             arguments: /s /t 10 /f /d p:4:1 /c "Ansible Shutdown"
 
     - name: set flag to recreate pagefile after next sysprep
-      win_shell: |
+      ansible.windows.win_shell: |
         $system = Get-WmiObject -Class Win32_ComputerSystem -EnableAllPrivileges
         if ($system -ne $null) {
             $system.AutomaticManagedPagefile = $true

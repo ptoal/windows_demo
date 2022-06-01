@@ -87,6 +87,26 @@
       datacenter: "{{ vmware_datacenter_name }}"
 
   tasks:
+    - name: create scheduled task to delete WinRM listeners and shutdown
+      win_scheduled_task:
+        name: sysprep-shutdown
+        username: SYSTEM
+        disallow_start_if_on_batteries: false
+        stop_if_going_on_batteries: false
+        actions:
+          - path: powershell.exe
+            arguments: Remove-Item -Path WSMan:\localhost\Listener\* -Recurse -Force
+          - path: shutdown.exe
+            arguments: /s /t 10 /f /d p:4:1 /c "Ansible Shutdown"
+
+    - name: set flag to recreate pagefile after next sysprep
+      win_shell: |
+        $system = Get-WmiObject -Class Win32_ComputerSystem -EnableAllPrivileges
+        if ($system -ne $null) {
+            $system.AutomaticManagedPagefile = $true
+            $system.Put()
+        }
+
     - name: Wait for the virtual machine to shutdown
       community.vmware.vmware_guest_powerstate:
         name: "{{ vmware_guest_name }}"

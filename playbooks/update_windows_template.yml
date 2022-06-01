@@ -60,6 +60,7 @@
         host: "{{ template_vm_ip_address }}"
         port: 5986
         timeout: "{{ instance_wait_connection_timeout }}"
+      delegate_to: localhost
 
 
 - name: update windows systems

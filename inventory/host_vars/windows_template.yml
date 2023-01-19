@@ -7,7 +7,7 @@ template_vm_root_disk_size: 30
 template_vm_guest_id: windows9Server64Guest
 template_vm_memory: 4096
 template_vm_efi: false
-template_vm_network_name: Sandbox
+template_vm_network_name: DPG-Sandbox
 template_vm_ip_address: 192.168.16.40
 template_vm_netmask: 255.255.240.0
 template_vm_gateway: 192.168.16.1

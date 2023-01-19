@@ -2,4 +2,5 @@
 collections:
   - name: redhat.satellite
   - name: community.vmware
+  - name: community.windows
   - name: chocolatey.chocolatey

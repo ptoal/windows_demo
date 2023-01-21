@@ -27,31 +27,30 @@
         state: present
       delegate_to: localhost
 
-    - name: VM powered on
+    - name: VM Configured
       community.vmware.vmware_guest:
         name: "{{ vmware_guest_name }}"
-        state: powered-on
+        state: present
         networks:
-          - name: mgmt
+          - name: DPG-Sandbox
             ip: "{{ template_vm_ip_address }}"
             netmask: "{{ template_vm_netmask }}"
             gateway: "{{ template_vm_gateway }}"
             domain: "{{ template_vm_domain }}"
-            dns_servers:
-              - "{{ template_vm_dns_servers }}"
+            dns_servers: "{{ template_vm_dns_servers }}"
         customization:
           autologon: true
-          orgname: Ansible
+          autologoncount: 3
+          orgname: ansible
           fullname: ansible
           existing_vm: true
           password: "{{ ansible_password }}"
-          dns_servers: "{{ item.dns_servers|default([]) }}"
           runonce:
-            - powershell.exe -command "& $([scriptblock]::\
-              Create((New-Object Net.WebClient).DownloadString\
-              ('https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1'))) -ForceNewSSLCert -EnableCredSSP"
+            - cmd.exe /C powershell.exe -command "& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1'))) -ForceNewSSLCert -EnableCredSSP"
             - winrm set winrm/config/service/auth @{CredSSP="true"}
             - netsh advfirewall set allprofiles state off
+        wait_for_customization: true
+        wait_for_customization_timeout: 600
       register: deploy
       delegate_to: localhost
 

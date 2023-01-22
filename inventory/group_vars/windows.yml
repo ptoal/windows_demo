@@ -1,5 +1,7 @@
 ansible_port: 5986
-ansible_connection: winrm
+ansible_connection: psrp
+ansible_psrp_auth: credssp
+ansible_psrp_cert_validation: ignore
 ansible_winrm_transport: credssp
 ansible_winrm_server_cert_validation: ignore
 local_administrator_password: !vault |

@@ -27,8 +27,6 @@
         ansible_connection: psrp
         ansible_psrp_auth: "{{ vm_ansible_winrm_transport | default('credssp') }}"
         ansible_psrp_cert_validation: ignore
-        ansible_psrp_operation_timeout_sec: 250
-        ansible_psrp_read_timeout_sec: 280
         ansible_win_async_startup_timeout: 60
 
     - include_role:

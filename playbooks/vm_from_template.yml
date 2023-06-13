@@ -14,10 +14,9 @@
         disk:
           - size_gb: 60
             type: thin
-            datastore: SSD2TB
+            datastore: EVO2TB
         networks:
           - name: DPG-Sandbox
-            mac: ee:ff:11:ee:44:58
         hardware:
           memory_mb: 4096
           num_cpus: 2

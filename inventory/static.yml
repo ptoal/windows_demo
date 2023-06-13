@@ -3,11 +3,14 @@ all:
   hosts:
     vcenter.mgmt.toal.ca:
     windows_template:
+    win2k22_template:
 
 templates:
   hosts:
     windows_template:
+    win2k22_template:
 
 windows:
   hosts:
     windows_template:
+    win2k22_template:

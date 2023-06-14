@@ -1,4 +1,4 @@
-- name: create a vmware windows template
+- name: Create a vmware windows template
   hosts: templates
   gather_facts: false
   become: false

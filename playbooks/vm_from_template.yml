@@ -1,11 +1,24 @@
 ---
-- name: Create a new VM from a VMWare Template
+- name: Add host
   hosts: localhost
+  vars:
+    newhost: win1.demo.toal.ca
+
+  tasks:
+    - name: Add new hosts to inventory
+      ansible.builtin.add_host:
+        name: "{{ newhost }}"
+        groups:
+          - windows
+          - new_hosts
+
+- name: Create a new VM from a VMWare Template
+  hosts: new_hosts
 
   tasks:
     - name: Create a new VM from vCenter Template
       community.vmware.vmware_guest:
-        name: win1.demo.toal.ca
+        name: "{{ inventory_hostname }}"
         state: poweredon
         template: windows_template
         datacenter: SagelyDC

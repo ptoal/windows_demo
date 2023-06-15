@@ -11,3 +11,5 @@ templates:
 windows:
   hosts:
     windows_template:
+    win1.demo.toal.ca:
+      ansible_host: 192.168.16.104

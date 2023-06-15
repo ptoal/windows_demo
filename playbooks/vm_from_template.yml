@@ -22,5 +22,18 @@
           num_cpus: 2
           # scsi: paravirtual
         wait_for_ip_address: true
+        customization:
+          autologon: true
+          autologoncount: 3
+          orgname: ansible
+          fullname: ansible
+          existing_vm: true
+          password: "{{ ansible_password }}"
+          runonce:
+            - cmd.exe /C powershell.exe -command "& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1'))) -ForceNewSSLCert -EnableCredSSP"
+            - winrm set winrm/config/service/auth @{CredSSP="true"}
+            - netsh advfirewall set allprofiles state off
+        wait_for_customization: true
+        wait_for_customization_timeout: 600
       delegate_to: localhost
       register: deploy

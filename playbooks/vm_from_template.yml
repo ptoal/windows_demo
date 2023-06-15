@@ -14,7 +14,7 @@
 
 - name: Create a new VM from a VMWare Template
   hosts: new_hosts
-
+  gather_facts: false
   tasks:
     - name: Create a new VM from vCenter Template
       community.vmware.vmware_guest:

@@ -3,5 +3,6 @@
   hosts: win1.demo.toal.ca
 
   tasks:
-    - ansible.builtin.include_role:
+    - name: Deploy ISS Role
+      ansible.builtin.include_role:
         name: ptoal.deploy_iis_app

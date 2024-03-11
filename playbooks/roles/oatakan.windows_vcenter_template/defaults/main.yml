@@ -32,7 +32,7 @@ iso_file_name: 17763.253.190108-0006.rs5_release_svc_refresh_SERVER_EVAL_x64FRE_
 windows_sysprep_template_folder: windows_server
 iso_image_index: 1
 
-winrm_enable_script_url: https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1
+winrm_enable_script_url: https://raw.githubusercontent.com/ansible/ansible-documentation/devel/examples/scripts/ConfigureRemotingForAnsible.ps1
 
 set_network_to_private: '([Activator]::CreateInstance([Type]::GetTypeFromCLSID([Guid]"{DCB00C01-570F-4A9B-8D69-199FDBA5723B}"))).GetNetworkConnections() | % {$_.GetNetwork().SetCategory(1)}'
 
